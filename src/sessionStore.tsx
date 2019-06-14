@@ -2,7 +2,9 @@ import { observable } from 'mobx';
 
 
 class Store {
-    @observable auth = {}
+    @observable auth = {
+        isLogged: false
+    }
 }
 
 const store = new Store()

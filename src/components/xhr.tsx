@@ -34,7 +34,7 @@ export const get = async(requestUrl: string, params: any, res: Function) => {
 
 export const post = async(requestUrl: string, params: any, res: Function, reserr: Function = (err: any) => console.log(err)) => {
     const base = requestUrl.indexOf('http') !== -1 ? "" : baseUrl
-    await fetch(base + requestUrl, {
+    return await fetch(base + requestUrl, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

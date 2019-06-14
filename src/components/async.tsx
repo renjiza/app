@@ -1,5 +1,4 @@
 import React, { PureComponent } from 'react';
-import { inject } from 'mobx-react';
 
 import { ucwords } from './xhr';
 
@@ -20,10 +19,17 @@ const LoadingIndicator = () => (
 )
 
 const PageNotFound = () => (
-    <div className="container">Page Not Found (404)</div>
+    <div className="errorpage">        
+        <div className="splitter">
+            <div className="image"></div>
+            <div className="text">
+                <b>404</b>
+                <label>Halaman tidak ditemukan</label>
+            </div>       
+        </div>
+    </div>
 )
 
-@inject('auth')
 export default class Async extends PureComponent<any, any> {
 
     constructor (props: any) {
@@ -34,13 +40,10 @@ export default class Async extends PureComponent<any, any> {
     }    
 
     async componentWillMount() {
-        const { param, auth } = this.props
+        const { param } = this.props
         const { params, url } = param.match
-        // console.log('[render for request]', url)
-        // global.path.current = url
-        // global.params = params
         switch (true) {
-            case (typeof params.module === 'undefined'):
+            case (url === '/'):
                 await import(`../templates/dashboard/dashboard`)
                     .then(Module => this.setState({ Module: Module.default }))
                     .catch((e) => { console.log(e); this.setState({ Module: PageNotFound }) })
